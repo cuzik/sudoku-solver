@@ -34,9 +34,8 @@ int ramdon_moves = 0;
 
 void ramdon_search(Board board);
 Board ramdon_search_aux(Board board);
-
-
-
+void generate();
+void generate_new_board();
 
 
 
@@ -48,16 +47,45 @@ int main(int argc, const char *argv[]){
     exit(1);
   }
   init_allegro();
-  srand( (unsigned)time(NULL) );
   Board board;
-  board.read_board(argv[1]);
-  board.init_potential();
-  board.put_the_single_potential();
+  srand( (unsigned)time(NULL) );
 
-  ramdon_search(board);
+  switch(atoi(argv[1])){
+    case 1:
+      board.read_board(argv[2]);
+      board.init_potential();
+      board.put_the_single_potential();
+      board.show_board();
+      ramdon_search(board);
+      break;
+    case 2:
+      generate();
+      break;
+  }
 
   finish_allegro();
   return 0;
+}
+
+void generate(){
+  while(run){
+    generate_new_board();
+  }
+}
+
+void generate_new_board(){
+  Board board;
+  board.read_board("board_generate");
+  board.init_potential();
+  board.put_the_single_potential();
+  board.show_board();
+  Board resp = ramdon_search_aux(board);
+  if(resp.valid){
+    board = resp;
+    for(int i=0; i<100 && run; i++){
+      board.show_board();
+    }
+  }
 }
 
 void ramdon_search(Board board){
@@ -194,7 +222,7 @@ void Board::show_board(){
 
   for(int i=0; i<3; i++){
     for(int j=0; j<3; j++){
-      al_draw_rectangle(TAM_BORDA + (TAM_CELULA * 3 * i), TAM_BORDA + (TAM_CELULA * 3 * j), TAM_BORDA + (TAM_CELULA * 3 * (i+1)), TAM_BORDA + (TAM_CELULA * 3 * (j+1)), al_map_rgb(50, 50, 50), 2.0);
+      al_draw_rectangle(TAM_BORDA + (TAM_CELULA * 3 * i), TAM_BORDA + (TAM_CELULA * 3 * j), TAM_BORDA + (TAM_CELULA * 3 * (i+1)), TAM_BORDA + (TAM_CELULA * 3 * (j+1)), al_map_rgb(50, 50, 50), 4.0);
     }
   }
 

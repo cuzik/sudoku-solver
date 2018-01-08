@@ -196,7 +196,7 @@ bool Board::move_wrong(){
   for(int i=0; i<9; i++){
     for(int j=0; j<9; j++){
       if(this->board[i][j].second.second == false && this->board[i][j].first.empty()){
-        std::cout << "ruim" << std::endl;
+        // std::cout << "ruim" << std::endl;
         return true;
       }
     }

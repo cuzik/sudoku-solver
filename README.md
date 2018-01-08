@@ -15,5 +15,10 @@ $ make
 # Run
 
 ```shell
-$ ./hocus_pocus [board_name]
+$ ./hocus_pocus [type] [board_name]
 ```
+
+type-list
+
+1. ramdon_search
+1. generate
